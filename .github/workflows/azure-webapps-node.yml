@@ -69,6 +69,12 @@ jobs:
       with:
         name: node-app
 
+    - name: Configure persistent SQLite storage
+      uses: azure/appservice-settings@v1
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        app-settings-json: '[{"name":"DATA_DIR","value":"/home/data","slotSetting":false}]'
+
     - name: 'Deploy to Azure WebApp'
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
