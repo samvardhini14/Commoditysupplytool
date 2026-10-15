@@ -1274,6 +1274,19 @@ function Dashboard({ tab, setTab, onLogout }) {
           {alertCount > 0 && <span className="alert-count">{alertCount}</span>}
         </button>
         <div className="user-menu">
+          <img
+            src={`${import.meta.env.BASE_URL}admin-profile.png`}
+            alt="Admin profile"
+            style={{
+              width: 28,
+              height: 28,
+              marginRight: 8,
+              verticalAlign: "middle",
+              objectFit: "cover",
+              border: "1px solid #ffffff80",
+              borderRadius: "50%",
+            }}
+          />
           Admin <button onClick={onLogout}>Logout</button>
         </div>
       </header>
