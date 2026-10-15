@@ -1,18 +1,22 @@
 {
-  "name": "commodity-supply-tool",
+  "name": "commodity-buying-tool",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:server": "node server.js",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "node server.js"
   },
   "dependencies": {
     "chart.js": "^4.4.4",
+    "express": "^5.3.0",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.3.0",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "sql.js": "^1.15.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",

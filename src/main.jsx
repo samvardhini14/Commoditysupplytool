@@ -370,21 +370,30 @@ function Login({ onLogin }) {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const submit = (event) => {
+  const submit = async (event) => {
     event.preventDefault();
-    if (
-      (user === "admin" && password === "cst@123") ||
-      (user === "tiger" && password === "tiger@123")
-    )
+    setError("");
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: user, password }),
+      });
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        setError(body.message || "Invalid username or password.");
+        return;
+      }
       onLogin();
-    else
-      setError("Invalid username or password. Use the demo credentials below.");
+    } catch {
+      setError("Unable to reach the application server. Start npm run dev:server.");
+    }
   };
   return (
     <main className="login-screen">
       <form className="login-card" onSubmit={submit}>
         <div className="login-brand">
-          CST <small>Commodity Supply Tool</small>
+          CBT <small>Commodity Buying Tool</small>
         </div>
         <h1>Sign in</h1>
         <p>Access commodity supply, forecast and finance modules.</p>
@@ -466,7 +475,7 @@ function Insight({ tab, onAsk }) {
       <div className="insight-icon">✦</div>
       <div>
         <div className="insight-title">
-          AI Insight <span>LIVE</span>
+          Business AI Insight <span>LIVE</span>
         </div>
         <ul>
           {copy.map((item) => (
@@ -477,7 +486,7 @@ function Insight({ tab, onAsk }) {
           className="text-button"
           onClick={() => onAsk("Summarize the key exceptions for this page")}
         >
-          Ask CST Copilot
+          Ask Natasha
         </button>
       </div>
     </aside>
@@ -1228,7 +1237,7 @@ function Dashboard({ tab, setTab, onLogout }) {
     <div className="app-shell" onClick={handleEditClick}>
       <header className="header">
         <div className="header-logo">
-          <span>CST</span>Commodity Supply Tool
+          <span>CBT</span>Commodity Buying Tool
         </div>
         <nav>
           {tabs.map((item) => (
@@ -1249,7 +1258,7 @@ function Dashboard({ tab, setTab, onLogout }) {
               setCopilot(true);
             }}
           >
-            ✦ Copilot
+            ✦ Natasha
           </button>
         </nav>
         <button
@@ -1312,7 +1321,7 @@ function Dashboard({ tab, setTab, onLogout }) {
       <main key={`${tab}-${region}-${period}`} className="page">
         <div className="page-head">
           <div>
-            <p className="eyebrow">CST / OPERATIONS</p>
+            <p className="eyebrow">CBT / OPERATIONS</p>
             <h2>{tab === "Home" ? "Home Dashboard" : tab}</h2>
             <p>
               Commodity supply overview for <b>{region}</b> and <b>{period}</b>{" "}
@@ -1341,7 +1350,7 @@ function Dashboard({ tab, setTab, onLogout }) {
               <strong>Alert created</strong>
               <span>
                 {alertBanner.type} · {alertBanner.frequency} · Recipient:{" "}
-                {alertBanner.recipient || "CST team"}
+                {alertBanner.recipient || "CBT team"}
               </span>
               <p>
                 {alertBanner.message ||
@@ -1657,7 +1666,7 @@ function Dashboard({ tab, setTab, onLogout }) {
           </div>
         )}
       </main>
-      <footer>© 2026 CST Commodity Supply Tool</footer>
+      <footer>© 2026 Commodity Buying Tool</footer>
       {message && (
         <div className="toast" onClick={() => setMessage("")}>
           {message}
@@ -1960,7 +1969,7 @@ function Copilot({ initialMessage, activeTab, period, onClose }) {
   const [messages, setMessages] = useState([
     {
       role: "bot",
-      text: "Hi, I'm CST Copilot. Ask about plan variance, plant allocations, forecast accuracy or commodity rates.",
+      text: "Hi, I'm Natasha. Ask about plan variance, plant allocations, forecast accuracy or commodity rates.",
     },
   ]);
   useEffect(() => {
@@ -2022,9 +2031,20 @@ function Copilot({ initialMessage, activeTab, period, onClose }) {
       <div className="copilot-overlay" onClick={onClose}></div>
       <section className="copilot">
         <div className="copilot-head">
-          <div className="copilot-avatar">✦</div>
+          <img
+            className="natasha-avatar"
+            src={`${import.meta.env.BASE_URL}natasha-wand.png`}
+            alt="Natasha holding a wand"
+            style={{
+              width: 28,
+              height: 28,
+              flex: "0 0 28px",
+              objectFit: "cover",
+              objectPosition: "50% 12%",
+            }}
+          />
           <div>
-            <b>CST Copilot</b>
+            <b>Natasha</b>
             <small>Connected to operational data</small>
           </div>
           <button className="close" onClick={onClose}>
@@ -2056,7 +2076,7 @@ function Copilot({ initialMessage, activeTab, period, onClose }) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && send()}
-            placeholder="Ask CST Copilot"
+            placeholder="Ask Natasha"
           />
           <button onClick={send}>Send</button>
         </div>
