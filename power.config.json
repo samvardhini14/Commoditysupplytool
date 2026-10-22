@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "appId": "4cefac9c-9532-4a7e-a893-abe66120be49",
+  "appDisplayName": "Commodity Supply Tool2",
+  "region": "prod",
+  "environmentId": "960908a7-9fe3-e212-ad01-4609ca4606dd",
+  "description": " ",
+  "buildPath": "dist",
+  "buildEntryPoint": "index.html",
+  "localAppUrl": "http://localhost:3000",
+  "logoPath": "Default",
+  "connectionReferences": {},
+  "databaseReferences": {}
+}
